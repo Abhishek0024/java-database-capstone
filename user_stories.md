@@ -1,178 +1,291 @@
 # Smart Clinic Management System - User Stories
 
-## Overview
+## Admin User Stories
 
-This document contains the user stories for the Smart Clinic Management System. The system supports three primary roles:
+### User Story 1
 
-- Admin
-- Doctor
-- Patient
+**Title:**  
+_As an Admin, I want to log into the portal with my username and password, so that I can securely manage the platform._
 
----
+**Acceptance Criteria:**
+1. The admin can log in using valid credentials.
+2. Invalid login attempts display an appropriate error message.
+3. A successful login redirects the admin to the dashboard.
 
-# Admin User Stories
+**Priority:** High
 
-## US-001: Admin Login
+**Story Points:** 3
 
-**As an Admin,**
-I want to securely log into the system,
-so that I can manage the clinic.
-
----
-
-## US-002: Manage Doctors
-
-**As an Admin,**
-I want to add, update, and remove doctor accounts,
-so that the doctor information remains accurate.
+**Notes:**
+- JWT authentication should be used for secure access.
 
 ---
 
-## US-003: Manage Patients
+### User Story 2
 
-**As an Admin,**
-I want to view and manage patient records,
-so that patient information stays up to date.
+**Title:**  
+_As an Admin, I want to log out of the portal, so that I can protect system access._
 
----
+**Acceptance Criteria:**
+1. The admin can log out from any authenticated page.
+2. The user's session or JWT token is invalidated.
+3. The admin is redirected to the login page after logout.
 
-## US-004: Manage Appointments
+**Priority:** High
 
-**As an Admin,**
-I want to view all appointments,
-so that I can monitor clinic schedules.
+**Story Points:** 2
 
----
-
-## US-005: Manage Users
-
-**As an Admin,**
-I want to assign user roles,
-so that each user has appropriate permissions.
+**Notes:**
+- Logout should prevent unauthorized access to protected pages.
 
 ---
 
-## US-006: Dashboard
+### User Story 3
 
-**As an Admin,**
-I want to view statistics such as total doctors, patients, and appointments,
-so that I can monitor clinic operations.
+**Title:**  
+_As an Admin, I want to add doctors to the portal, so that they can manage appointments._
 
----
+**Acceptance Criteria:**
+1. The admin can enter all required doctor information.
+2. The system validates the entered data.
+3. The doctor is successfully added to the system.
 
-# Doctor User Stories
+**Priority:** High
 
-## US-007: Doctor Login
+**Story Points:** 5
 
-**As a Doctor,**
-I want to securely log into the system,
-so that I can access my dashboard.
-
----
-
-## US-008: View Appointments
-
-**As a Doctor,**
-I want to see my scheduled appointments,
-so that I can prepare for patient visits.
+**Notes:**
+- Doctor email addresses must be unique.
 
 ---
 
-## US-009: Update Appointment Status
+### User Story 4
 
-**As a Doctor,**
-I want to update appointment statuses,
-so that patients know whether appointments are completed or cancelled.
+**Title:**  
+_As an Admin, I want to delete a doctor's profile from the portal, so that inactive doctors are removed from the system._
 
----
+**Acceptance Criteria:**
+1. The admin can select a doctor profile for deletion.
+2. The system requests confirmation before deleting the profile.
+3. The doctor profile is permanently removed after confirmation.
 
-## US-010: Add Prescriptions
+**Priority:** Medium
 
-**As a Doctor,**
-I want to create prescriptions for patients,
-so that patients receive proper treatment instructions.
+**Story Points:** 3
 
----
-
-## US-011: View Patient History
-
-**As a Doctor,**
-I want to access previous appointment history,
-so that I can make informed medical decisions.
+**Notes:**
+- Ensure appointment history is handled according to business rules.
 
 ---
 
-## US-012: Manage Availability
+### User Story 5
 
-**As a Doctor,**
-I want to update my available appointment slots,
-so that patients can book appointments during available times.
+**Title:**  
+_As an Admin, I want to run a stored procedure in MySQL CLI to get the number of appointments per month, so that I can track usage statistics._
+
+**Acceptance Criteria:**
+1. The stored procedure executes successfully.
+2. Monthly appointment statistics are returned.
+3. The output displays the appointment count for each month.
+
+**Priority:** Medium
+
+**Story Points:** 5
+
+**Notes:**
+- This functionality is intended for reporting and analytics.
 
 ---
 
 # Patient User Stories
 
-## US-013: Patient Registration
+### User Story 1
 
-**As a Patient,**
-I want to register an account,
-so that I can access clinic services online.
+**Title:**  
+_As a Patient, I want to view a list of doctors without logging in, so that I can explore available doctors before registering._
 
----
+**Acceptance Criteria:**
+1. The doctor list is publicly accessible.
+2. Each doctor's name and specialization are displayed.
+3. No authentication is required to access the list.
 
-## US-014: Patient Login
+**Priority:** Medium
 
-**As a Patient,**
-I want to securely log into the portal,
-so that I can manage my appointments.
+**Story Points:** 3
 
----
-
-## US-015: Book Appointment
-
-**As a Patient,**
-I want to book an appointment with a doctor,
-so that I can receive medical consultation.
+**Notes:**
+- Only public doctor information should be displayed.
 
 ---
 
-## US-016: Cancel Appointment
+### User Story 2
 
-**As a Patient,**
-I want to cancel an appointment,
-so that my appointment slot becomes available if I cannot attend.
+**Title:**  
+_As a Patient, I want to sign up using my email and password, so that I can book appointments._
 
----
+**Acceptance Criteria:**
+1. The patient can register using a unique email address.
+2. Required fields are validated before account creation.
+3. The patient account is successfully created.
 
-## US-017: View Appointment History
+**Priority:** High
 
-**As a Patient,**
-I want to view my appointment history,
-so that I can keep track of my medical visits.
+**Story Points:** 5
 
----
-
-## US-018: View Prescriptions
-
-**As a Patient,**
-I want to access my prescriptions online,
-so that I can review my medications anytime.
+**Notes:**
+- Passwords must be securely encrypted before storage.
 
 ---
 
-## US-019: Update Profile
+### User Story 3
 
-**As a Patient,**
-I want to update my contact information,
-so that the clinic can reach me when necessary.
+**Title:**  
+_As a Patient, I want to log into the portal, so that I can manage my bookings._
+
+**Acceptance Criteria:**
+1. The patient can log in using valid credentials.
+2. Invalid login attempts display an error message.
+3. Successful login redirects the patient to the dashboard.
+
+**Priority:** High
+
+**Story Points:** 3
+
+**Notes:**
+- JWT authentication should be used.
 
 ---
 
-# Future Enhancements
+### User Story 4
 
-- Email appointment reminders
-- SMS notifications
-- Online payments
-- Telemedicine consultations
-- Medical report uploads
-- Appointment rescheduling
+**Title:**  
+_As a Patient, I want to log out of the portal, so that I can secure my account._
+
+**Acceptance Criteria:**
+1. The patient can log out from any authenticated page.
+2. The user's session or JWT token is invalidated.
+3. The patient is redirected to the login page.
+
+**Priority:** High
+
+**Story Points:** 2
+
+**Notes:**
+- Logout should prevent access to protected resources.
+
+---
+
+### User Story 5
+
+**Title:**  
+_As a Patient, I want to book an hour-long appointment and view my upcoming appointments, so that I can consult with a doctor and prepare accordingly._
+
+**Acceptance Criteria:**
+1. The patient can select an available doctor and appointment slot.
+2. The appointment duration is one hour.
+3. The booked appointment appears in the patient's upcoming appointments list.
+
+**Priority:** High
+
+**Story Points:** 8
+
+**Notes:**
+- The system must prevent double-booking of appointment slots.
+
+---
+
+# Doctor User Stories
+
+### User Story 1
+
+**Title:**  
+_As a Doctor, I want to log into the portal, so that I can manage my appointments._
+
+**Acceptance Criteria:**
+1. The doctor can log in using valid credentials.
+2. Invalid login attempts display an error message.
+3. Successful login redirects the doctor to the dashboard.
+
+**Priority:** High
+
+**Story Points:** 3
+
+**Notes:**
+- JWT authentication should be used.
+
+---
+
+### User Story 2
+
+**Title:**  
+_As a Doctor, I want to log out of the portal, so that I can protect my data._
+
+**Acceptance Criteria:**
+1. The doctor can log out from any authenticated page.
+2. The user's session or JWT token is invalidated.
+3. The doctor is redirected to the login page.
+
+**Priority:** High
+
+**Story Points:** 2
+
+**Notes:**
+- Protected pages should not be accessible after logout.
+
+---
+
+### User Story 3
+
+**Title:**  
+_As a Doctor, I want to view my appointment calendar, so that I can stay organized._
+
+**Acceptance Criteria:**
+1. The doctor can view all upcoming appointments.
+2. Appointments are displayed by date and time.
+3. The calendar updates when appointments are modified.
+
+**Priority:** High
+
+**Story Points:** 5
+
+**Notes:**
+- Only the doctor's own appointments should be visible.
+
+---
+
+### User Story 4
+
+**Title:**  
+_As a Doctor, I want to mark my unavailability, so that patients can only book available slots._
+
+**Acceptance Criteria:**
+1. The doctor can select unavailable dates and times.
+2. Unavailable slots cannot be booked by patients.
+3. The availability calendar is updated immediately.
+
+**Priority:** High
+
+**Story Points:** 5
+
+**Notes:**
+- Existing appointments should not be affected.
+
+---
+
+### User Story 5
+
+**Title:**  
+_As a Doctor, I want to update my profile with my specialization and contact information and view patient details for upcoming appointments, so that patients have up-to-date information and I can be prepared._
+
+**Acceptance Criteria:**
+1. The doctor can update specialization and contact details.
+2. Updated profile information is visible to patients.
+3. The doctor can view patient details for upcoming appointments.
+
+**Priority:** High
+
+**Story Points:** 8
+
+**Notes:**
+- Doctors can only access information related to their own appointments.
+```
