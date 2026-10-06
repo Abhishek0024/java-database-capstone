@@ -1,3 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Metadata and Resources -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Select Role</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="../assets/images/logo/logo.png" type="image/png">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- JavaScript Utilities -->
+  <script src="../js/util.js" defer></script>
+  <script src="../js/render.js" defer></script>
+
+  <!-- JavaScript Components -->
+  <script src="../js/components/header.js" defer></script>
+  <script src="../js/components/footer.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Page Container -->
+  <div class="container">
+
+    <!-- Wrapper for Layout -->
+    <div class="wrapper">
+
+      <!-- Header Placeholder -->
+      <div id="header"></div>
+
+      <!-- Main Content -->
+      <main class="main-content">
+
+        <!-- Role Selection Heading -->
+        <h2>Select Your Role</h2>
+
+        <!-- Role Selection Buttons -->
+        <div class="role-buttons">
+
+          <button
+            id="adminLoginBtn"
+            class="role-button"
+            onclick="selectRole('Admin')">
+            Admin
+          </button>
+
+          <button
+            id="doctorLoginBtn"
+            class="role-button"
+            onclick="selectRole('Doctor')">
+            Doctor
+          </button>
+
+          <button
+            id="patientLoginBtn"
+            class="role-button"
+            onclick="selectRole('Patient')">
+            Patient
+          </button>
+
+        </div>
+
+      </main>
+
+      <!-- Footer Placeholder -->
+      <div id="footer"></div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+
+    <div class="modal-content">
+
+      <!-- Close Button -->
+      <span id="closeModal" class="modal-close">&times;</span>
+
+      <!-- Dynamic Modal Content -->
+      <div id="modal-body">
+        <!-- Dynamic content will be inserted here -->
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Page-Specific Logic -->
+  <script
+    type="module"
+    src="../js/services/index.js"
+    defer>
+  </script>
+
+</body>
+
+</html>
+
 <!-- index.html -->
 <!-- 
 

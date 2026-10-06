@@ -1,3 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Metadata and Resources -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DoctorDashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon"
+          type="image/png"
+          th:href="@{/assets/images/logo/logo.png}">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/doctorDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- JavaScript Utilities -->
+    <script th:src="@{/js/render.js}" defer></script>
+    <script th:src="@{/js/util.js}" defer></script>
+
+    <!-- JavaScript Components -->
+    <script th:src="@{/js/components/header.js}" defer></script>
+    <script th:src="@{/js/components/footer.js}" defer></script>
+    <script th:src="@{/js/components/patientRows.js}" defer></script>
+
+    <!-- JavaScript Services and Dashboard Logic -->
+    <script th:src="@{/js/services/patientServices.js}" defer></script>
+    <script type="module"
+            th:src="@{/js/services/doctorDashboard.js}"
+            defer></script>
+</head>
+
+<body onload="renderContent()">
+
+<!-- Page Container -->
+<div class="container">
+
+    <!-- Wrapper for Layout -->
+    <div class="wrapper">
+
+        <!-- Header Placeholder -->
+        <div id="header"></div>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+
+            <!-- Search Bar -->
+            <input
+                    type="text"
+                    id="searchBar"
+                    class="searchBar"
+                    placeholder="Search Bar for custom output">
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+
+                <!-- Today's Appointments -->
+                <button id="todayButton" type="button">
+                    Today's Appointments
+                </button>
+
+                <!-- Date Selection -->
+                <input
+                        type="date"
+                        id="datePicker">
+
+            </div>
+
+            <!-- Patient Records Table -->
+            <table id="patientTable">
+
+                <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Prescription</th>
+                </tr>
+                </thead>
+
+                <tbody id="patientTableBody">
+                <!-- Patient rows will be inserted dynamically -->
+                </tbody>
+
+            </table>
+
+        </main>
+
+        <!-- Footer Placeholder -->
+        <div id="footer"></div>
+
+    </div>
+</div>
+
+</body>
+
+</html>
+
+
 <!-- doctorDashboard.html -->
 
 <!-- 

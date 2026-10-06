@@ -1,3 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Metadata and Resources -->
+    <meta charset="UTF-8">
+
+    <title>Admin Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon"
+          type="image/png"
+          th:href="@{/assets/images/logo/logo.png}">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- JavaScript Utilities & Rendering -->
+    <script th:src="@{/js/render.js}" defer></script>
+    <script th:src="@{/js/util.js}" defer></script>
+
+    <!-- JavaScript Components -->
+    <script th:src="@{/js/components/header.js}" defer></script>
+    <script th:src="@{/js/components/footer.js}" defer></script>
+</head>
+
+<body onload="renderContent()">
+
+<!-- Page Container -->
+<div class="container">
+
+    <!-- Wrapper for Layout -->
+    <div class="wrapper">
+
+        <!-- Header Placeholder -->
+        <div id="header"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Search Bar -->
+            <input
+                    type="text"
+                    id="searchBar"
+                    placeholder="search by doctor name">
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+
+                <!-- Time Filter -->
+                <select id="timeFilter">
+                    <option value="">Sort by Time</option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+
+                <!-- Specialty Filter -->
+                <select id="specialtyFilter">
+                    <option value="">Filter by Specialty</option>
+                    <option value="Cardiologist">Cardiologist</option>
+                    <option value="Dentist">Dentist</option>
+                    <option value="Dermatologist">Dermatologist</option>
+                    <option value="Neurologist">Neurologist</option>
+                    <option value="Orthopedic">Orthopedic</option>
+                </select>
+
+            </div>
+
+            <!-- Dynamic Doctor Content -->
+            <div id="content"></div>
+
+        </main>
+
+        <!-- Footer Placeholder -->
+        <div id="footer"></div>
+
+    </div>
+</div>
+
+<!-- Add Doctor Modal -->
+<div id="modal" class="modal">
+
+    <!-- Close Button -->
+    <span id="closeModal" class="close">&times;</span>
+
+    <!-- Dynamic Modal Content -->
+    <div id="modal-body"></div>
+
+</div>
+
+<!-- Page-Specific JavaScript -->
+<script
+        type="module"
+        src="../js/services/adminDashboard.js"
+        defer>
+</script>
+
+<script
+        type="module"
+        src="../js/components/doctorCard.js"
+        defer>
+</script>
+
+</body>
+
+</html>
+
+
+
 <!-- adminDashboard.html -->
 
 <!-- 

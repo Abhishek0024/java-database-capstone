@@ -1,3 +1,251 @@
+/* style sheet file for index.html */
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Base HTML & Body */
+
+html,
+body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/* Layout Wrapper */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+/* Main Content */
+
+.main-content {
+  flex-grow: 1;
+
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  background-image: url('../images/background/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+/* Heading */
+
+h2 {
+  font-size: 48px;
+  margin-bottom: 50px;
+
+  color: #003e3e;
+
+  font-weight: bold;
+  font-family: 'Alegreya', 'Roboto', sans-serif;
+}
+
+
+/* Buttons */
+
+button {
+  background-color: #015c5d;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 10px 20px;
+  width: 200px;
+
+  margin-top: 10px;
+
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #A62B1F;
+}
+
+
+/* Role Buttons */
+
+.role-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Dashboard Button */
+
+.dashboard-btn {
+  background-color: #015c5d;
+}
+
+.dashboard-btn:hover {
+  background-color: #003e3e;
+}
+
+
+/* Modal */
+
+.modal {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Modal Content */
+
+.modal-content {
+  position: relative;
+
+  padding: 30px;
+
+  background-color: white;
+  border-radius: 12px;
+
+  width: 90%;
+  max-width: 500px;
+}
+
+
+/* Modal Close Button */
+
+.close,
+.modal-close {
+  position: absolute;
+
+  top: 10px;
+  right: 15px;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.close:hover,
+.modal-close:hover {
+  color: #A62B1F;
+}
+
+
+/* Input Fields */
+
+.input-field {
+  width: 100%;
+
+  padding: 10px;
+
+  margin-top: 10px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #015c5d;
+}
+
+
+/* Select Dropdown */
+
+.select-dropdown {
+  width: 100%;
+
+  padding: 10px;
+
+  margin-top: 10px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
+/* Checkbox Group */
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 30px;
+}
+
+
+/* Footer */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 30px;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+  h2 {
+    font-size: 36px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .header,
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  button {
+    width: 180px;
+  }
+}
+
 /* this is the style sheet file for index.htlm  */
 
 /* 
