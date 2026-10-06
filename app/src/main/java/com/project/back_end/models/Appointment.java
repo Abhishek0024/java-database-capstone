@@ -18,21 +18,24 @@ public class Appointment {
 
   @ManyToOne
   @NotNull(message = "Doctor cannot be null")
-
+  @JoinColumn(name = "doctor_id", nullable = false)
   private Doctor doctor;
 
 
   @ManyToOne
   @NotNull(message = "Patient cannot be null")
+  @JoinColumn(name = "patient_id", nullable = false)
   private Patient patient;
 
 
   @NotNull(message = "Appointment time cannot be null")
   @Future(message = "Appointment time must be in the future")
+  @Column(name = "appointment_time", nullable = false)
   private LocalDateTime appointmentTime;
 
 
   @NotNull(message = "Status cannot be null")
+  @Column(name = "status", nullable = false)
   private int status; // 0 for scheduled, 1 for completed
 
   // Transient field to calculate the end time of the appointment
