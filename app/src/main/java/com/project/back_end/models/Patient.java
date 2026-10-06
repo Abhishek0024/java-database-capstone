@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 
 
 @Entity
-@Table(name = "patients")
+
 public class Patient {
 
     @Id
