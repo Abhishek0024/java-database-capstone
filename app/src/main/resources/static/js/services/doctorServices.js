@@ -72,7 +72,7 @@ export async function saveDoctor(doctor, token) {
   try {
 
     const response = await fetch(
-      `${DOCTOR_API}/${token}`,
+      `${DOCTOR_API}/register/${encodeURIComponent(token)}`,
       {
         method: "POST",
 
@@ -84,11 +84,11 @@ export async function saveDoctor(doctor, token) {
       }
     );
 
-    const data = await response.json();
+    const message = await response.text();
 
     return {
       success: response.ok,
-      message: data.message
+      message
     };
 
   } catch (error) {

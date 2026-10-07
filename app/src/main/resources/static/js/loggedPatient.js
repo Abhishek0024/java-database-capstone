@@ -62,6 +62,11 @@ export function showBookingOverlay(e, doctor, patient) {
   modalApp.querySelector(".confirm-booking").addEventListener("click", async () => {
     const date = modalApp.querySelector("#appointment-date").value;
     const time = modalApp.querySelector("#appointment-time").value;
+    if (!date || !time) {
+      alert("Select an appointment date and time.");
+      return;
+    }
+
     const token = localStorage.getItem("token");
     const startTime = time.split('-')[0];
     const appointment = {

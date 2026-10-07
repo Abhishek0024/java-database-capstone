@@ -4,8 +4,8 @@
 
 /* Import Required Modules */
 
-import { getAllAppointments } from "./appointmentRecordService.js";
-import { createPatientRow } from "../components/patientRows.js";
+import { getAllAppointments } from "./services/appointmentRecordService.js";
+import { createPatientRow } from "./components/patientRows.js";
 
 
 /* Global Variables */
@@ -14,12 +14,20 @@ const patientTableBody =
   document.getElementById("patientTableBody");
 
 let selectedDate =
-  new Date().toISOString().split("T")[0];
+  getLocalDate();
 
 const token =
   localStorage.getItem("token");
 
 let patientName = null;
+
+function getLocalDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
 
 /* Search Bar */
@@ -35,7 +43,7 @@ if (searchBar) {
       searchBar.value.trim();
 
     patientName =
-      value === "" ? "null" : value;
+      value || null;
 
     loadAppointments();
 
@@ -54,7 +62,7 @@ if (todayButton) {
   todayButton.addEventListener("click", () => {
 
     selectedDate =
-      new Date().toISOString().split("T")[0];
+      getLocalDate();
 
     const datePicker =
       document.getElementById("datePicker");
@@ -138,17 +146,18 @@ async function loadAppointments() {
     appointments.forEach((appointment) => {
 
       const patient = {
-        id: appointment.patient?.id,
-        name: appointment.patient?.name,
-        phone: appointment.patient?.phone,
-        email: appointment.patient?.email
+        id: appointment.patientId,
+        name: appointment.patientName,
+        phone: appointment.patientPhone,
+        email: appointment.patientEmail
       };
 
 
       const row =
         createPatientRow(
           patient,
-          appointment
+          appointment.id,
+          appointment.doctorId
         );
 
 
@@ -167,14 +176,12 @@ async function loadAppointments() {
 
 
     if (patientTableBody) {
-
-      patientTableBody.innerHTML = `
-        <tr>
-          <td colspan="5">
-            Error loading appointments. Try again later.
-          </td>
-        </tr>
-      `;
+      const row = document.createElement("tr");
+      const message = document.createElement("td");
+      message.colSpan = 5;
+      message.textContent = `Error loading appointments: ${error.message}`;
+      row.appendChild(message);
+      patientTableBody.replaceChildren(row);
 
     }
 
@@ -194,7 +201,7 @@ document.addEventListener(
     }
 
     const today =
-      new Date().toISOString().split("T")[0];
+      getLocalDate();
 
     selectedDate = today;
 

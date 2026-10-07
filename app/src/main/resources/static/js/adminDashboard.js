@@ -187,7 +187,7 @@ window.adminAddDoctor = async function () {
   const name =
     document.getElementById("doctorName").value;
 
-  const specialization =
+  const specialty =
     document.getElementById("specialization").value;
 
   const email =
@@ -202,7 +202,7 @@ window.adminAddDoctor = async function () {
 
   /* Get Availability */
 
-  const availability =
+  const availableTimes =
     Array.from(
       document.querySelectorAll(
         'input[name="availability"]:checked'
@@ -231,11 +231,11 @@ window.adminAddDoctor = async function () {
 
   const doctor = {
     name,
-    specialization,
+    specialty,
     email,
     password,
     phone,
-    availability
+    availableTimes
   };
 
 

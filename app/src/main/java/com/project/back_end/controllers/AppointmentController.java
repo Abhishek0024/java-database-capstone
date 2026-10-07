@@ -1,6 +1,7 @@
 package com.project.back_end.controllers;
 
 import com.project.back_end.models.Appointment;
+import com.project.back_end.DTO.AppointmentDTO;
 import com.project.back_end.services.AppointmentService;
 import com.project.back_end.services.Service;
 import jakarta.validation.Valid;
@@ -43,7 +44,22 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Doctor ID missing or invalid.");
         }
 
-        List<Appointment> appointments = appointmentService.getAppointmentsForDoctorOnDate(doctorId, date, patientName);
+        List<AppointmentDTO> appointments = appointmentService
+                .getAppointmentsForDoctorOnDate(doctorId, date, patientName)
+                .stream()
+                .map(appointment -> new AppointmentDTO(
+                        appointment.getId(),
+                        appointment.getDoctor().getId(),
+                        appointment.getDoctor().getName(),
+                        appointment.getPatient().getId(),
+                        appointment.getPatient().getName(),
+                        appointment.getPatient().getEmail(),
+                        appointment.getPatient().getPhone(),
+                        appointment.getPatient().getAddress(),
+                        appointment.getAppointmentTime(),
+                        appointment.getStatus()
+                ))
+                .toList();
         return ResponseEntity.ok(appointments);
     }
 

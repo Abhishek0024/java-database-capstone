@@ -115,6 +115,13 @@ function renderHeader() {
 
     headerContent += `
       <button
+        id="patientHome"
+        class="adminBtn"
+        onclick="window.location.href='/'">
+        Home
+      </button>
+
+      <button
         id="patientLogin"
         class="adminBtn">
         Login

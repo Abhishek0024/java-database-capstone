@@ -1,5 +1,24 @@
 /* This is the style sheet for the doctorDashboard.html */
 
+/* === Doctor Dashboard Layout === */
+.main-content {
+  align-items: stretch;
+  text-align: left;
+}
+
+.main-content h1 {
+  text-align: center;
+}
+
+.main-content .searchBar {
+  align-self: flex-start;
+  width: min(100%, 420px);
+}
+
+.main-content .filters {
+  justify-content: flex-start;
+}
+
 /* === Table Header === */
 .table-header {
   font-size: 24px;

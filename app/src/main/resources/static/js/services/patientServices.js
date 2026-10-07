@@ -43,55 +43,36 @@ export async function patientLogin(data) {
 
 // For getting patient data (name ,id , etc ). Used in booking appointments
 export async function getPatientData(token) {
-  try {
-    const response = await fetch(`${PATIENT_API}/${token}`);
-    const data = await response.json();
-    if (response.ok) return data.patient;
-    return null;
-  } catch (error) {
-    console.error("Error fetching patient details:", error);
-    return null;
+  const response = await fetch(`${PATIENT_API}/me/${encodeURIComponent(token)}`);
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || `Failed to fetch patient details (${response.status}).`);
   }
+  return await response.json();
 }
 
-// the Backend API for fetching the patient record(visible in Doctor Dashboard) and Appointments (visible in Patient Dashboard) are same based on user(patient/doctor).
+// Fetch appointments for a patient or for a patient record viewed by a doctor.
 export async function getPatientAppointments(id, token, user) {
-  try {
-    const response = await fetch(`${PATIENT_API}/${id}/${user}/${token}`);
-    const data = await response.json();
-    console.log(data.appointments)
-    if (response.ok) {
-      return data.appointments;
-    }
-    return null;
+  const response = await fetch(
+    `${PATIENT_API}/appointments/${encodeURIComponent(id)}/${encodeURIComponent(user)}/${encodeURIComponent(token)}`
+  );
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || `Failed to fetch appointments (${response.status}).`);
   }
-  catch (error) {
-    console.error("Error fetching patient details:", error);
-    return null;
-  }
+  return await response.json();
 }
 
 export async function filterAppointments(condition, name, token) {
-  try {
-    const response = await fetch(`${PATIENT_API}/filter/${condition}/${name}/${token}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const params = new URLSearchParams({ token });
+  if (condition) params.set("condition", condition);
+  if (name) params.set("name", name);
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-
-    } else {
-      console.error("Failed to fetch doctors:", response.statusText);
-      return { appointments: [] };
-
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("Something went wrong!");
-    return { appointments: [] };
+  const response = await fetch(`${PATIENT_API}/appointments/filter?${params.toString()}`);
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(message || `Failed to filter appointments (${response.status}).`);
   }
+
+  return { appointments: await response.json() };
 }

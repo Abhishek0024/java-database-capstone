@@ -72,7 +72,11 @@ public class DoctorController {
     // Doctor login
     @PostMapping("/login")
     public ResponseEntity<?> doctorLogin(@Valid @RequestBody Login login) {
-        return ResponseEntity.ok(doctorService.validateDoctor(login.getEmail(), login.getPassword()));
+        String token = doctorService.validateDoctor(login.getEmail(), login.getPassword());
+        if ("Invalid email or password".equals(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(token);
+        }
+        return ResponseEntity.ok(token);
     }
 
     // Update doctor (admin-only)

@@ -5,9 +5,17 @@ const APPOINTMENT_API = `${API_BASE_URL}/appointments`;
 
 //This is for the doctor to get all the patient Appointments
 export async function getAllAppointments(date, patientName, token) {
-  const response = await fetch(`${APPOINTMENT_API}/${date}/${patientName}/${token}`);
+  const params = new URLSearchParams();
+  if (patientName && patientName !== "null") {
+    params.set("patientName", patientName);
+  }
+  const query = params.toString();
+  const response = await fetch(
+    `${APPOINTMENT_API}/${encodeURIComponent(token)}/${encodeURIComponent(date)}${query ? `?${query}` : ""}`
+  );
   if (!response.ok) {
-    throw new Error("Failed to fetch appointments");
+    const message = await response.text();
+    throw new Error(message || `Failed to fetch appointments (${response.status}).`);
   }
 
   return await response.json();
@@ -15,7 +23,7 @@ export async function getAllAppointments(date, patientName, token) {
 
 export async function bookAppointment(appointment, token) {
   try {
-    const response = await fetch(`${APPOINTMENT_API}/${token}`, {
+    const response = await fetch(`${APPOINTMENT_API}/book/${encodeURIComponent(token)}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -23,16 +31,16 @@ export async function bookAppointment(appointment, token) {
       body: JSON.stringify(appointment)
     });
 
-    const data = await response.json();
+    const message = await response.text();
     return {
       success: response.ok,
-      message: data.message || "Something went wrong"
+      message: message || (response.ok ? "Appointment booked successfully." : response.statusText)
     };
   } catch (error) {
     console.error("Error while booking appointment:", error);
     return {
       success: false,
-      message: "Network error. Please try again later."
+      message: error.message || "Network error. Please try again later."
     };
   }
 }
