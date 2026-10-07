@@ -80,8 +80,7 @@ function renderHeader() {
     headerContent += `
       <button
         id="addDocBtn"
-        class="adminBtn"
-        onclick="openModal('addDoctor')">
+        class="adminBtn">
         Add Doctor
       </button>
 

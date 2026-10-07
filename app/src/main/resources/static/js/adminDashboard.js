@@ -4,24 +4,22 @@
 
 /* Import Required Modules */
 
-import { openModal } from "../components/modals.js";
+import { openModal } from "./components/modals.js";
 import {
   getDoctors,
   filterDoctors,
   saveDoctor
-} from "./doctorServices.js";
-import { createDoctorCard } from "../components/doctorCard.js";
+} from "./services/doctorServices.js";
+import { createDoctorCard } from "./components/doctorCard.js";
 
 
-/* Add Doctor Button */
+/* Add Doctor Buttons */
 
-const addDoctorBtn = document.getElementById("addDocBtn");
-
-if (addDoctorBtn) {
-  addDoctorBtn.addEventListener("click", () => {
+document.addEventListener("click", (event) => {
+  if (event.target instanceof Element && event.target.closest("#addDocBtn, #addDoctorBtn")) {
     openModal("addDoctor");
-  });
-}
+  }
+});
 
 
 /* Load Doctor Cards */
@@ -263,9 +261,12 @@ window.adminAddDoctor = async function () {
       /* Close Modal */
 
       const modal =
-        document.getElementById("modal");
+        document.getElementById("modal") ||
+        document.getElementById("modal-overlay");
 
-      if (modal) {
+      if (modal?.classList.contains("modal-overlay")) {
+        modal.classList.add("hidden");
+      } else if (modal) {
         modal.style.display = "none";
       }
 

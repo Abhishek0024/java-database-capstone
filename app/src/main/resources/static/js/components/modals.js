@@ -73,11 +73,27 @@ export function openModal(type) {
       `;
   }
 
-  document.getElementById('modal-body').innerHTML = modalContent;
-  document.getElementById('modal').style.display = 'block';
+  const modalBody = document.getElementById("modal-body");
+  const modal = document.getElementById("modal") || document.getElementById("modal-overlay");
+  const closeButton = document.getElementById("closeModal") || document.getElementById("modal-close");
 
-  document.getElementById('closeModal').onclick = () => {
-    document.getElementById('modal').style.display = 'none';
+  if (!modalBody || !modal || !closeButton) {
+    throw new Error("Modal markup is missing required content, container, or close button.");
+  }
+
+  modalBody.innerHTML = modalContent;
+  if (modal.classList.contains("modal-overlay")) {
+    modal.classList.remove("hidden");
+  } else {
+    modal.style.display = "block";
+  }
+
+  closeButton.onclick = () => {
+    if (modal.classList.contains("modal-overlay")) {
+      modal.classList.add("hidden");
+    } else {
+      modal.style.display = "none";
+    }
   };
 
   if (type === "patientSignup") {
