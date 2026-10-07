@@ -1,3 +1,170 @@
+/* Import Required Modules */
+
+import { openModal } from "../components/modals.js";
+import { API_BASE_URL } from "../config/config.js";
+
+
+/* API Endpoints */
+
+const ADMIN_API = API_BASE_URL + "/admin";
+const DOCTOR_API = API_BASE_URL + "/doctor/login";
+
+
+/* Setup Login Button Event Listeners */
+
+window.onload = function () {
+
+  const adminBtn = document.getElementById("adminLogin");
+  const doctorBtn = document.getElementById("doctorLogin");
+
+
+  /* Admin Login Button */
+
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => {
+      openModal("adminLogin");
+    });
+  }
+
+
+  /* Doctor Login Button */
+
+  if (doctorBtn) {
+    doctorBtn.addEventListener("click", () => {
+      openModal("doctorLogin");
+    });
+  }
+
+};
+
+
+/* Admin Login Handler */
+
+window.adminLoginHandler = async function () {
+
+  /* Get Username and Password */
+
+  const username =
+    document.getElementById("username").value;
+
+  const password =
+    document.getElementById("password").value;
+
+
+  /* Create Admin Object */
+
+  const admin = {
+    username,
+    password
+  };
+
+
+  try {
+
+    /* Send Login Request */
+
+    const response = await fetch(ADMIN_API, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(admin)
+    });
+
+
+    /* Handle Login Response */
+
+    if (response.ok) {
+
+      const data = await response.json();
+
+      localStorage.setItem("token", data.token);
+
+      selectRole("admin");
+
+    } else {
+
+      alert("Invalid credentials!");
+
+    }
+
+  } catch (error) {
+
+    console.error("Admin login error:", error);
+
+    alert("Something went wrong. Please try again.");
+
+  }
+
+};
+
+
+/* Doctor Login Handler */
+
+window.doctorLoginHandler = async function () {
+
+  /* Get Email and Password */
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+
+  /* Create Doctor Object */
+
+  const doctor = {
+    email,
+    password
+  };
+
+
+  try {
+
+    /* Send Login Request */
+
+    const response = await fetch(DOCTOR_API, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(doctor)
+    });
+
+
+    /* Handle Login Response */
+
+    if (response.ok) {
+
+      const data = await response.json();
+
+      localStorage.setItem("token", data.token);
+
+      selectRole("doctor");
+
+    } else {
+
+      alert("Invalid credentials!");
+
+    }
+
+  } catch (error) {
+
+    console.error("Doctor login error:", error);
+
+    alert("Something went wrong. Please try again.");
+
+  }
+
+};
+
+
+
 /*
   Import the openModal function to handle showing login popups/modals
   Import the base API URL from the config file
