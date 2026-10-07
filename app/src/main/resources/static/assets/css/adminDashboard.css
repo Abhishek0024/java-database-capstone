@@ -1,427 +1,155 @@
 /* this is the style sheet for the adminDashboard. */
 
-/* Global Reset */
-
+/* === Global Reset === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-/* Base HTML & Body */
-
-html,
-body {
+/* === Base Layout === */
+html, body {
   height: 100%;
   font-family: Arial, sans-serif;
 }
 
-
-/* Main Layout Wrapper */
-
+/* === Layout Wrapper === */
 .wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* === Section Heading === */
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: #003e3e;
+  text-align: center;
+}
 
-/* Main Content */
-
+/* === Main Content Area === */
 .main-content {
   flex-grow: 1;
-
   padding: 40px;
-
   display: flex;
   flex-direction: column;
-
   align-items: center;
-
   text-align: center;
 
-  background-image: url('../images/index.png');
+  background-image: url("../images/index/index.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
-
-/* Section Heading */
-
-h2 {
-  font-size: 32px;
-  font-weight: bold;
-
-  margin-bottom: 50px;
-
-  color: #003e3e;
-}
-
-
-/* Search Bar */
-
-#searchBar {
-  width: 100%;
-  max-width: 500px;
-
-  padding: 12px 15px;
-  margin-bottom: 20px;
-
+/* === Search Input === */
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-
   font-size: 16px;
+  margin-bottom: 20px;
 }
 
-#searchBar:focus {
-  outline: none;
-  border-color: #015c5d;
-}
-
-
-/* Filter Section */
-
-.filter-section {
+/* === Filter Dropdowns === */
+.filters {
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  gap: 15px;
-
+  gap: 20px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-
-/* Filter Dropdowns */
-
-.filter-section select {
-  padding: 10px 15px;
-
+.filters select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 10px;
-
-  font-size: 15px;
-
-  cursor: pointer;
 }
 
-.filter-section select:focus {
-  outline: none;
-  border-color: #015c5d;
-}
-
-
-/* Primary Buttons */
-
-button,
-.button {
+/* === Primary Button === */
+button {
   background-color: #A62B1F;
   color: white;
-
   border: none;
   border-radius: 12px;
-
   padding: 10px 20px;
   margin-top: 20px;
-
   width: 200px;
-
   cursor: pointer;
-
   font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-
-/* Button Hover */
-
-button:hover,
-.button:hover {
-  background-color: #A62B1F;
+button:hover {
+  background-color: #A62B1F; /* Keep same for brand consistency */
 }
 
-
-/* Admin Button */
-
+/* === Admin-Specific Button === */
 .adminBtn {
   background-color: #f4f4f4;
   color: #333;
-
   font-weight: bold;
-
   width: 110px;
-
   padding: 10px 0;
-
   border: none;
-
   cursor: pointer;
+  transition: color 0.2s ease-in-out;
 }
-
-
-/* Admin Button Hover */
 
 .adminBtn:hover {
-  background-color: #f4f4f4;
   color: #A62B1F;
 }
 
-
-/* Doctor Content Area */
-
-#content {
-  width: 100%;
-
+/* === Doctor Card List Layout === */
+.doctor-card-list {
   display: flex;
   flex-wrap: wrap;
-
+  gap: 30px;
   justify-content: center;
-
-  gap: 20px;
-
-  margin-top: 20px;
+  width: 100%;
 }
 
-
-/* Doctor Cards */
-
-.doctor-card {
-  width: 280px;
-
-  padding: 20px;
-
-  background-color: white;
-
-  border-radius: 12px;
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-
-  text-align: left;
-}
-
-
-/* Modal */
-
-.modal {
+/* === Modal Overlay === */
+.modal-overlay {
   position: fixed;
-
   top: 0;
   left: 0;
-
   width: 100%;
   height: 100%;
-
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
-
-  justify-content: center;
   align-items: center;
-
-  background-color: rgba(0, 0, 0, 0.5);
-
-  opacity: 0;
-  visibility: hidden;
-
-  transition: opacity 0.3s ease,
-              visibility 0.3s ease;
+  justify-content: center;
+  z-index: 1000;
 }
 
-
-/* Modal Visible State */
-
-.modal.show {
-  opacity: 1;
-  visibility: visible;
+.modal-overlay.hidden {
+  display: none;
 }
 
-
-/* Modal Content */
-
+/* === Modal Content Box === */
 .modal-content {
-  position: relative;
-
-  width: 90%;
-  max-width: 500px;
-
+  background-color: #fff;
   padding: 30px;
-
-  background-color: white;
-
   border-radius: 12px;
+  width: 400px;
+  position: relative;
 }
 
-
-/* Modal Close Button */
-
-.close {
+.modal-close {
   position: absolute;
-
   top: 10px;
-  right: 15px;
-
-  font-size: 28px;
-
+  right: 16px;
+  font-size: 24px;
+  color: #888;
   cursor: pointer;
 }
 
-.close:hover {
+.modal-close:hover {
   color: #A62B1F;
 }
-
-
-/* Modal Inputs */
-
-.modal input,
-.modal select,
-.modal textarea {
-  width: 100%;
-
-  padding: 10px;
-
-  margin-top: 10px;
-  margin-bottom: 15px;
-
-  border: 1px solid #ccc;
-  border-radius: 8px;
-
-  font-size: 15px;
-}
-
-.modal input:focus,
-.modal select:focus,
-.modal textarea:focus {
-  outline: none;
-  border-color: #015c5d;
-}
-
-
-/* Responsive Design */
-
-@media (max-width: 768px) {
-
-  .main-content {
-    padding: 20px;
-  }
-
-  .filter-section {
-    flex-direction: column;
-
-    width: 100%;
-  }
-
-  .filter-section select {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  #searchBar {
-    max-width: 300px;
-  }
-
-  #content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .doctor-card {
-    width: 90%;
-    max-width: 350px;
-  }
-}
-
-
-/*this is the style sheet for the adminDashboard. */
-
-/* 
-Global Reset (`*`)
-
-* Purpose: Ensure consistent layout across all browsers.
-* Properties:
-
-  * `margin: 0` — removes default outer spacing from all elements.
-  * `padding: 0` — removes default inner spacing.
-  * `box-sizing: border-box` — ensures padding and borders are included within the total width/height of elements.
-
-Base HTML & Body (`html, body`)
-
-* Purpose: Establish a full-height layout and apply a standard font across the page.
-* Properties:
-
-  * `height: 100%` — allows containers to stretch to the full viewport height.
-  * `font-family: Arial, sans-serif` — applies a clean, readable sans-serif font.
-
-Main Layout Wrapper (`.wrapper`)
-
-* Purpose: Create a flexible, vertical layout that fills the entire screen.
-* Properties:
-
-  * `display: flex` — enables flexbox for layout control.
-  * `flex-direction: column` — stacks children vertically.
-  * `min-height: 100vh` — ensures the wrapper always covers full screen height.
-
-Section Heading (`h2`)
-
-* Purpose: Style the headings prominently for section separation.
-* Properties:
-
-  * `font-size: 32px` — makes the heading large and noticeable.
-  * `font-weight: bold` — emphasizes text.
-  * `margin-bottom: 50px` — creates space below the heading.
-  * `color: #003e3e` — uses a strong teal for visual anchoring.
-
-Main Content Section (`.main-content`)
-
-* Purpose: Layout the main content with padding and a background image.
-* Properties:
-
-  * `flex-grow: 1` — lets the content fill the available vertical space.
-  * `padding: 40px` — adds internal spacing around content.
-  * `display: flex` and `flex-direction: column` — organizes content in a vertical stack.
-  * `text-align: center` — centers the text.
-  * `background-image: url("index.png")` — sets a full-screen dashboard background.
-  * `background-size: cover` — ensures the image covers the whole section.
-  * `background-position: center` — centers the image.
-  * `background-repeat: no-repeat` — avoids tiling the image.
-  * `background-attachment: fixed` — fixes the image while scrolling.
-
-Primary Button (`button`)
-
-* Purpose: Design prominent, interactive buttons for main actions.
-
-* Properties:
-
-  * `background-color: #A62B1F` — sets a bold red color.
-  * `color: white` — makes text stand out.
-  * `border: none` — removes any outline/border.
-  * `border-radius: 12px` — creates rounded corners.
-  * `padding: 10px 20px` — gives space inside the button.
-  * `margin-top: 20px` — adds spacing above the button.
-  * `width: 200px` — ensures consistent button width.
-  * `cursor: pointer` — shows a hand icon on hover.
-  * `font-size: 16px` — makes the text readable.
-
-* On Hover:
-
-  * Retains the same red background to maintain branding.
-
-Admin Button (`.adminBtn`)
-
-* Purpose: Provide a secondary button style for admin-specific actions.
-
-* Properties:
-
-  * `background-color: #f4f4f4` — uses a light grey background.
-  * `color: #333` — uses dark text for contrast.
-  * `font-weight: bold` — emphasizes text.
-  * `width: 110px` — smaller, compact width.
-  * `padding: 10px 0` — vertical padding only.
-  * `border: none` — clean look.
-  * `cursor: pointer` — indicates it's clickable.
-
-* On Hover**:
-
-   Changes text color to `#A62B1F` for brand consistency while keeping the background same.
-
-
-*/

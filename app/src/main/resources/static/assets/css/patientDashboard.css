@@ -1,4 +1,14 @@
 /* This is the style sheet for the patientDashboard.html */
+  .main-content {
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .main-content .searchBar {
+    align-self: flex-start;
+    width: min(100%, 420px);
+  }
+
   .card-actions {
     background-color: #244557;
     padding: 10px;
@@ -77,4 +87,3 @@
     filter: brightness(1.2);
     background-color: #1c3745;
   }
-  

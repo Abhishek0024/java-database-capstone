@@ -1,12 +1,12 @@
 // patientServices
 import { API_BASE_URL } from "../config/config.js";
-const PATIENT_API = API_BASE_URL + '/patient'
+const PATIENT_API = `${API_BASE_URL}/patient`;
 
 
 //For creating a patient in db
 export async function patientSignup(data) {
   try {
-    const response = await fetch(`${PATIENT_API}`,
+    const response = await fetch(`${PATIENT_API}/register`,
       {
         method: "POST",
         headers: {
@@ -15,11 +15,11 @@ export async function patientSignup(data) {
         body: JSON.stringify(data)
       }
     );
-    const result = await response.json();
+    const message = await response.text();
     if (!response.ok) {
-      throw new Error(result.message);
+      throw new Error(message || response.statusText);
     }
-    return { success: response.ok, message: result.message }
+    return { success: true, message };
   }
   catch (error) {
     console.error("Error :: patientSignup :: ", error)

@@ -107,7 +107,7 @@ public class Appointment {
     this.appointmentTime = appointmentTime;
   }
 
-
+    public void setStatus(Integer status) { this.status = status; }
   public int getStatus() {
     return status;
   }

@@ -117,15 +117,16 @@ window.loginPatient = async function () {
     const response = await patientLogin(data);
     console.log("Status Code:", response.status);
     console.log("Response OK:", response.ok);
-    if (response.ok) {
-      const result = await response.json();
-      console.log(result);
-      selectRole('loggedPatient');
-      localStorage.setItem('token', result.token)
-      window.location.href = '/pages/loggedPatientDashboard.html';
-    } else {
-      alert('❌ Invalid credentials!');
+    const token = (await response.text()).trim();
+
+    if (!response.ok || token.split(".").length !== 3) {
+      alert(token || "❌ Invalid credentials!");
+      return;
     }
+
+    localStorage.setItem('token', token);
+    selectRole('loggedPatient');
+
   }
   catch (error) {
     alert("❌ Failed to Login : ", error);

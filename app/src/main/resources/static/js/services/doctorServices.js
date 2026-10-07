@@ -114,33 +114,23 @@ export async function filterDoctors(
 ) {
 
   try {
+    const params = new URLSearchParams();
+    if (name) params.set("name", name);
+    if (time) params.set("time", time);
+    if (specialty) params.set("speciality", specialty);
 
-    const response = await fetch(
-      `${DOCTOR_API}/filter/${name || ""}/${time || ""}/${specialty || ""}`
-    );
-
-
-    if (response.ok) {
-
-      return await response.json();
-
+    const response = await fetch(`${DOCTOR_API}/filter?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error(`Doctor filter request failed with status ${response.status}.`);
     }
 
-
-    console.error(
-      "Failed to filter doctors:",
-      response.status
-    );
-
-    return {
-      doctors: []
-    };
+    return await response.json();
 
   } catch (error) {
 
     console.error("Error filtering doctors:", error);
 
-    alert("Unable to fetch doctors.");
+    alert("Unable to fetch doctors. Please try again.");
 
     return {
       doctors: []

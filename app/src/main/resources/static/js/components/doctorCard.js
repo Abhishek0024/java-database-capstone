@@ -54,7 +54,7 @@ export function createDoctorCard(doctor) {
 
   const specialization = document.createElement("p");
   specialization.textContent =
-    `Specialization: ${doctor.specialization}`;
+    `Specialization: ${doctor.specialty}`;
 
 
   /* Doctor Email */
@@ -68,7 +68,7 @@ export function createDoctorCard(doctor) {
 
   const availability = document.createElement("p");
   availability.textContent =
-    `Available: ${doctor.availability.join(", ")}`;
+    `Available: ${doctor.availableTimes.join(", ")}`;
 
 
   /* Add Doctor Information */

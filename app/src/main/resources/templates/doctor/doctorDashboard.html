@@ -1,105 +1,71 @@
+<!-- doctorDashboard.html -->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Metadata and Resources -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/images/logo/logo.png}" />
 
-    <title>DoctorDashboard</title>
-
-    <!-- Favicon -->
-    <link rel="icon"
-          type="image/png"
-          th:href="@{/assets/images/logo/logo.png}">
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/doctorDashboard.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-
-    <!-- JavaScript Utilities -->
-    <script th:src="@{/js/render.js}" defer></script>
-    <script th:src="@{/js/util.js}" defer></script>
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/doctorDashboard.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" />
 
     <!-- JavaScript Components -->
-    <script th:src="@{/js/components/header.js}" defer></script>
-    <script th:src="@{/js/components/footer.js}" defer></script>
-    <script th:src="@{/js/components/patientRows.js}" defer></script>
-
-    <!-- JavaScript Services and Dashboard Logic -->
-    <script th:src="@{/js/services/patientServices.js}" defer></script>
-    <script type="module"
-            th:src="@{/js/services/doctorDashboard.js}"
-            defer></script>
+    <script defer th:src="@{/js/util.js}"></script>
+    <script defer th:src="@{/js/render.js}"></script>
+    <script defer th:src="@{/js/components/header.js}"></script>
+    <script defer th:src="@{/js/components/footer.js}"></script>
+    <script defer type="module" th:src="@{/js/doctorDashboard.js}"></script>
 </head>
 
 <body onload="renderContent()">
+    <div class="container">
+        <div class="wrapper">
 
-<!-- Page Container -->
-<div class="container">
+            <!-- Header Placeholder -->
+            <div id="header"></div>
 
-    <!-- Wrapper for Layout -->
-    <div class="wrapper">
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <h1>Doctor Dashboard</h1>
 
-        <!-- Header Placeholder -->
-        <div id="header"></div>
+                <!-- Search Bar -->
+                <input type="text" id="searchBar" class="searchBar" placeholder="Search Bar for custom output" />
 
-        <!-- Main Dashboard Content -->
-        <main class="main-content">
+                <!-- Filter Controls -->
+                <div class="filters">
+                    <button id="todayButton" class="dashboard-btn">Today’s Appointments</button>
+                    <input type="date" id="datePicker" class="date-filter" />
+                </div>
 
-            <!-- Search Bar -->
-            <input
-                    type="text"
-                    id="searchBar"
-                    class="searchBar"
-                    placeholder="Search Bar for custom output">
-
-            <!-- Filter Section -->
-            <div class="filter-section">
-
-                <!-- Today's Appointments -->
-                <button id="todayButton" type="button">
-                    Today's Appointments
-                </button>
-
-                <!-- Date Selection -->
-                <input
-                        type="date"
-                        id="datePicker">
-
+                <!-- Patient Table -->
+                <table class="patient-table">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Phone No.</th>
+                            <th>Email</th>
+                            <th>Prescription</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
+                </table>
             </div>
 
-            <!-- Patient Records Table -->
-            <table id="patientTable">
-
-                <thead>
-                <tr>
-                    <th>Patient ID</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Prescription</th>
-                </tr>
-                </thead>
-
-                <tbody id="patientTableBody">
-                <!-- Patient rows will be inserted dynamically -->
-                </tbody>
-
-            </table>
-
-        </main>
-
-        <!-- Footer Placeholder -->
-        <div id="footer"></div>
-
+            <!-- Footer Placeholder -->
+            <div id="footer"></div>
+        </div>
     </div>
-</div>
-
 </body>
 
 </html>
+
 
 
 <!-- doctorDashboard.html -->
