@@ -2,153 +2,130 @@
 
 ## Overview
 
-The Smart Clinic Management System uses a hybrid database architecture:
+The application uses two databases:
 
-- **MySQL** is used to store structured and relational data such as admins, doctors, patients, and appointments.
-- **MongoDB** is used to store flexible document-based data such as prescriptions, where the number of medicines and additional notes may vary between patients.
+- **MySQL** stores admins, doctors, patients, appointments, and each doctor's
+  available time slots.
+- **MongoDB** stores prescriptions in the `prescriptions` collection.
 
----
-
-# MySQL Database Design
-
-## Table: Admin
-
-| Column Name | Data Type | Constraints |
-|-------------|-----------|------------|
-| admin_id | INT | PRIMARY KEY, AUTO_INCREMENT |
-| username | VARCHAR(50) | NOT NULL, UNIQUE |
-| password | VARCHAR(255) | NOT NULL |
-| full_name | VARCHAR(100) | NOT NULL |
-| email | VARCHAR(100) | NOT NULL, UNIQUE |
-
----
-
-## Table: Doctors
-
-| Column Name | Data Type | Constraints |
-|-------------|-----------|------------|
-| doctor_id | INT | PRIMARY KEY, AUTO_INCREMENT |
-| full_name | VARCHAR(100) | NOT NULL |
-| specialization | VARCHAR(100) | NOT NULL |
-| phone | VARCHAR(15) | NOT NULL |
-| email | VARCHAR(100) | NOT NULL, UNIQUE |
-| availability | BOOLEAN | DEFAULT TRUE |
-
----
-
-## Table: Patients
-
-| Column Name | Data Type | Constraints |
-|-------------|-----------|------------|
-| patient_id | INT | PRIMARY KEY, AUTO_INCREMENT |
-| full_name | VARCHAR(100) | NOT NULL |
-| gender | VARCHAR(10) | NOT NULL |
-| age | INT | NOT NULL |
-| phone | VARCHAR(15) | NOT NULL |
-| email | VARCHAR(100) | UNIQUE |
-| password | VARCHAR(255) | NOT NULL |
-
----
-
-## Table: Appointments
-
-| Column Name | Data Type | Constraints |
-|-------------|-----------|------------|
-| appointment_id | INT | PRIMARY KEY, AUTO_INCREMENT |
-| patient_id | INT | NOT NULL, FOREIGN KEY REFERENCES Patients(patient_id) |
-| doctor_id | INT | NOT NULL, FOREIGN KEY REFERENCES Doctors(doctor_id) |
-| appointment_date | DATE | NOT NULL |
-| appointment_time | TIME | NOT NULL |
-| status | VARCHAR(20) | NOT NULL |
-
----
-
-# Entity Relationships
-
-- One Doctor can have many Appointments.
-- One Patient can have many Appointments.
-- Each Appointment belongs to one Doctor and one Patient.
-- Admin manages Doctors, Patients, and Appointments.
-
----
-
-# MongoDB Collection Design
-
-## Collection: prescriptions
-
-### Sample Document
-
-```json
-{
-  "_id": "66a12345bcde987654321000",
-
-  "appointmentId": 101,
-
-  "doctor": {
-    "doctorId": 5,
-    "name": "Dr. Raj Sharma",
-    "specialization": "Cardiologist"
-  },
-
-  "patient": {
-    "patientId": 12,
-    "name": "Amit Kumar",
-    "age": 35
-  },
-
-  "medicines": [
-    {
-      "name": "Paracetamol",
-      "dosage": "500 mg",
-      "frequency": "Twice a day",
-      "duration": "5 days"
-    },
-    {
-      "name": "Vitamin D",
-      "dosage": "1000 IU",
-      "frequency": "Once a day",
-      "duration": "30 days"
-    }
-  ],
-
-  "tests": [
-    "Blood Test",
-    "ECG"
-  ],
-
-  "doctorNotes": "Take medicines after meals and return for follow-up after one week.",
-
-  "createdAt": "2026-07-20T10:30:00Z"
-}
-```
-
----
-
-# Design Justification
+The relational schema is managed by Spring Data JPA/Hibernate. The tables below
+describe the fields and relationships represented by the current Java entities.
+Exact SQL types and generated constraint names can vary with the database and
+Hibernate naming strategy. Bean Validation rules are identified separately
+from database constraints.
 
 ## MySQL
 
-MySQL is used because:
+### Admin
 
-- It provides strong consistency for relational data.
-- Foreign keys maintain relationships between doctors, patients, and appointments.
-- Constraints such as PRIMARY KEY, UNIQUE, and NOT NULL help maintain data integrity.
-- It is suitable for structured healthcare records.
+Entity: `Admin`
+
+| Field | Mapped SQL type (typical) | Database mapping / validation |
+|---|---|---|
+| `id` | `BIGINT` | Primary key; generated identity |
+| `username` | `VARCHAR` | Not null and unique |
+| `password` | `VARCHAR` | Not null; excluded from JSON responses |
+
+The Admin entity has no full-name or email fields.
+
+### Doctor
+
+Entity: `Doctor`
+
+| Field | Mapped SQL type (typical) | Database mapping / validation |
+|---|---|---|
+| `id` | `BIGINT` | Primary key; generated identity |
+| `name` | `VARCHAR(100)` | Required; length 3-100 |
+| `specialty` | `VARCHAR(50)` | Required; length 3-50 |
+| `email` | `VARCHAR` | Required; validated as an email address |
+| `password` | `VARCHAR` | Required; minimum length 6; excluded from JSON responses |
+| `phone` | `VARCHAR` | Required; exactly 10 digits |
+| `availableTimes` | Separate collection table | List of available time-slot strings |
+
+The `availableTimes` list is stored in `doctor_available_times`:
+
+| Field | Mapping |
+|---|---|
+| `doctor_id` | Foreign key to the Doctor primary key; collection-table join column |
+| `available_times` | One string value for each time slot |
+
+The application checks for an existing doctor email before saving, but the
+Doctor entity does not declare a database-level unique constraint on `email`.
+Availability is represented by the time-slot list, not by a Boolean flag.
+
+### Patient
+
+Entity: `Patient`
+
+| Field | Mapped SQL type (typical) | Database mapping / validation |
+|---|---|---|
+| `id` | `BIGINT` | Primary key; generated identity |
+| `name` | `VARCHAR(100)` | Required; length 3-100 |
+| `email` | `VARCHAR` | Required; validated as an email address |
+| `password` | `VARCHAR` | Required; minimum length 6; excluded from JSON responses |
+| `phone` | `VARCHAR` | Required; exactly 10 digits |
+| `address` | `VARCHAR(255)` | Required; maximum length 255 |
+
+The application checks for an existing patient email or phone number during
+registration. The Patient entity does not declare database-level unique
+constraints for those fields. Patient records do not have gender or age fields.
+
+### Appointment
+
+Entity: `Appointment`
+
+| Field | Mapped SQL type (typical) | Database mapping / validation |
+|---|---|---|
+| `id` | `BIGINT` | Primary key; generated identity |
+| `doctor_id` | `BIGINT` | Required foreign key to Doctor |
+| `patient_id` | `BIGINT` | Required foreign key to Patient |
+| `appointment_time` | `DATETIME` | Required; represented in Java as `LocalDateTime`; must be in the future on validated requests |
+| `status` | `INTEGER` | Required; `0` means scheduled and `1` means completed |
+
+Each appointment belongs to one doctor and one patient. A doctor and a patient
+can each be associated with multiple appointments. Appointment date and time
+are stored together in `appointment_time`; the entity exposes derived date,
+time, and end-time values for application use.
 
 ## MongoDB
 
-MongoDB is used because:
+### Collection: `prescriptions`
 
-- Prescriptions vary from patient to patient.
-- Each prescription may contain a different number of medicines.
-- Arrays and nested documents make prescription storage flexible.
-- Future fields such as medical reports, attachments, or follow-up notes can be added without changing the schema.
+Entity: `Prescription` (`@Document(collection = "prescriptions")`)
 
----
+| Field | BSON value (typical) | Validation |
+|---|---|---|
+| `_id` | String | MongoDB document identifier |
+| `patientName` | String | Required; length 3-100 |
+| `appointmentId` | Number (`Long`) | Required; identifies the related MySQL appointment |
+| `medication` | String | Required; length 3-100 |
+| `dosage` | String | Required |
+| `doctorNotes` | String | Optional; maximum length 200 |
 
-# Database Summary
+A prescription currently stores one medication and dosage as fields on the
+document. The model does not define embedded doctor or patient objects, arrays
+of medicines or tests, or a creation timestamp.
 
-| Database | Stores |
-|----------|--------|
-| MySQL | Admins, Doctors, Patients, Appointments |
+`appointmentId` is a logical reference to an appointment in MySQL; MongoDB does
+not enforce a relational foreign key across the two databases. The repository
+queries prescriptions by `appointmentId`.
+
+## Relationships and constraints
+
+- `Appointment.doctor` and `Appointment.patient` are JPA many-to-one
+  relationships with required join columns.
+- `Doctor.availableTimes` is a JPA element collection stored in
+  `doctor_available_times`.
+- `Admin.username` has an explicit unique database constraint.
+- Doctor email and Patient email/phone duplicate checks are performed by
+  application code; they are not declared as unique constraints on those
+  entities.
+- Password fields are excluded from JSON serialization. The entity annotations
+  do not themselves establish a password-hashing strategy.
+
+## Database summary
+
+| Database | Data |
+|---|---|
+| MySQL | Admins, doctors, doctor time slots, patients, appointments |
 | MongoDB | Prescriptions |
